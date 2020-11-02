@@ -35,7 +35,12 @@ const conv = () => {
     const [messages, setMessages] = useState([])
     const [writing, setWriting] = useState(false)
     socket.on("writing", (data) => setWriting(data))
-    socket.on("userCount", (data) => setUsersOnline(data))
+    socket.on("connect", (sockt) => {
+        socket.on("userCount", (data) => { setUsersOnline(data); console.log(data) })
+    })
+
+    socket.on("userCount", (data) => { setUsersOnline(data); console.log({ Usercount: data }) })
+
     const handleSend = () => {
         socket.emit("test1", msg);
         socket.on("test1", data => setMessages(messages.concat(data)))
@@ -47,7 +52,7 @@ const conv = () => {
         <>
             <DivWrapper>
                 <DivWelcome>
-                    <h1 css={tw` text-lg`}>   welcome :<span css={tw`font-semibold`}>  {username.username}</span> <AccountCircleIcon css={tw`text-gray-600`} /></h1>
+                    <h1 css={tw` text-lg`}>   welcome :<span css={tw`font-semibold`}>  {username.username}</span> </h1>
                     {writing ? <p style={{ color: "#25d366" }}> writing... </p> : ""}
                 </DivWelcome>
                 <DivUsersOnline>
