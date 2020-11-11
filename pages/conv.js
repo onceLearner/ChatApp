@@ -37,7 +37,7 @@ const conv = () => {
 
 
     socket.on('connect', data => {
-        socket.emit("username", username)
+        if (username) socket.emit("username", username)
         console.log({ username })
     })
 
