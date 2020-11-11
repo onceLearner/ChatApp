@@ -25,7 +25,7 @@ right:10%;
 `
 
 const socket = IO("http://localhost:5000")
-socket.on("message", (data) => { console.log(data) })
+
 
 const conv = () => {
     const username = useContext(UserContext)
@@ -34,9 +34,15 @@ const conv = () => {
     const [messages, setMessages] = useState([])
     const [writing, setWriting] = useState(false)
     const [room, setRoom] = useState("");
+
+
+    socket.on('connect', data => {
+        socket.emit("username", { username: username })
+    })
     socket.on("writing", (data) => setWriting(data))
-    socket.on("userCount", (data) => { setUsersOnline(data); console.log({ Usercount: data }) })
-    socket.on("connectToRoom", (data) => setRoom(data))
+    socket.on
+        ("userCount", (data) => { setUsersOnline(data); console.log({ Usercount: data }) })
+    socket.on("welcome", (data) => setRoom(data))
 
     const handleSend = () => {
         socket.emit("test1", msg);
@@ -47,7 +53,7 @@ const conv = () => {
 
     return (
         <>
-            <DivWrapper>
+            <DivWrapper    >
                 <DivWelcome>
                     <h1 css={tw` text-lg`}>   welcome :<span css={tw`font-semibold`}>  {username.username}</span> </h1>
                     {writing ? <p style={{ color: "#25d366" }}> writing... </p> : ""}
