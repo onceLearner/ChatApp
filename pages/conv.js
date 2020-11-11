@@ -37,13 +37,14 @@ const conv = () => {
 
 
     socket.on('connect', data => {
-        socket.emit("username", { username: username })
+        socket.emit("username", username)
+        console.log({ username })
+        socket.on("userCount", (data) => { setUsersOnline(data) })
     })
-    socket.on("writing", (data) => setWriting(data))
-    socket.on
-        ("userCount", (data) => { setUsersOnline(data); console.log({ Usercount: data }) })
+
     socket.on("welcome", (data) => setRoom(data))
 
+    socket.on("writing", (data) => setWriting(data))
     const handleSend = () => {
         socket.emit("test1", msg);
         socket.on("test1", data => setMessages(messages.concat(data)))
