@@ -39,9 +39,9 @@ const conv = () => {
     socket.on('connect', data => {
         socket.emit("username", username)
         console.log({ username })
-        socket.on("userCount", (data) => { setUsersOnline(data) })
     })
 
+    socket.on("userCount", (data) => { setUsersOnline(data) })
     socket.on("welcome", (data) => setRoom(data))
 
     socket.on("writing", (data) => setWriting(data))
